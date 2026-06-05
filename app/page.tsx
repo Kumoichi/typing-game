@@ -1,5 +1,5 @@
-import TypingGame from './components/TypingGame'
+import VsGameScreen from './components/VsGameScreen'
 
 export default function Home() {
-  return <TypingGame />
+  return <VsGameScreen />
 }
