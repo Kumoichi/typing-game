@@ -22,7 +22,7 @@ interface PlayerStats {
   status: 'ready' | 'playing'
 }
 
-const ROWS = 12
+const ROWS = 10
 const COLS = 8
 
 export default function VsGameScreen() {
@@ -163,8 +163,8 @@ export default function VsGameScreen() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-      <div className="relative w-full max-w-5xl aspect-[16/9] bg-gradient-to-b from-[#a3c2f9] via-[#c2ccf9] to-[#d6c7f9] p-6 flex flex-col justify-between overflow-hidden font-mono tracking-wider border-4 border-black rounded-lg shadow-2xl">
+    <div className="h-screen bg-gray-900 flex items-center justify-center p-2 overflow-hidden">
+      <div className="relative w-full max-w-5xl h-full bg-gradient-to-b from-[#a3c2f9] via-[#c2ccf9] to-[#d6c7f9] p-3 flex flex-col justify-between overflow-hidden font-mono tracking-wider border-4 border-black rounded-lg shadow-2xl">
         {/* 背景装飾 */}
         <div className="absolute top-10 left-10 text-white text-xl animate-pulse pointer-events-none">
           ✦
@@ -256,7 +256,7 @@ export default function VsGameScreen() {
         </div>
 
         {/* --- MAIN SECTION: パズルグリッド & VSロゴ --- */}
-        <div className="flex-1 flex justify-between items-end mt-4 relative z-10">
+        <div className="flex-1 flex justify-center items-end mt-4 relative z-10 gap-48">
           {/* P1 パズルボード */}
           <div className="border-[5px] border-black rounded-sm bg-black/5 shadow-[0_0_15px_rgba(107,164,232,0.5)] overflow-hidden">
             <div className="border-t-[6px] border-black">{renderGrid(false)}</div>

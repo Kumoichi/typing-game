@@ -60,7 +60,7 @@ export default function TypingGame() {
       setAccuracy(calculatedAccuracy)
       setGameState('finished')
 
-      fetch('/api/scores', {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/scores`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ wpm: calculatedWpm, accuracy: calculatedAccuracy }),
