@@ -1,0 +1,16 @@
+{
+  "files.exclude": {
+    "front/node_modules": true,
+    "front/.next": true,
+    "front/prisma/dev.db": true,
+    "backend/scores.db": true
+  },
+  "files.watcherExclude": {
+    "**/front/node_modules/**": true,
+    "**/front/.next/**": true
+  },
+  "search.exclude": {
+    "front/node_modules": true,
+    "front/.next": true
+  }
+}
