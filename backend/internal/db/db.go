@@ -2,35 +2,39 @@ package db
 
 import (
 	"database/sql"
+	"io/fs"
 
-	_ "modernc.org/sqlite"
+	"github.com/jmoiron/sqlx"
+	"github.com/pressly/goose/v3"
+
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 type DB struct {
-	*sql.DB
+	*sqlx.DB
 }
 
-func New(path string) (*DB, error) {
-	conn, err := sql.Open("sqlite", path)
+func New(dsn string, migrations fs.FS) (*DB, error) {
+	db, err := sqlx.Open("pgx", dsn)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := migrate(conn); err != nil {
+	if err := db.Ping(); err != nil {
 		return nil, err
 	}
 
-	return &DB{conn}, nil
+	if err := migrate(db.DB, migrations); err != nil {
+		return nil, err
+	}
+
+	return &DB{db}, nil
 }
 
-func migrate(db *sql.DB) error {
-	_, err := db.Exec(`
-		CREATE TABLE IF NOT EXISTS scores (
-			id         INTEGER PRIMARY KEY AUTOINCREMENT,
-			wpm        INTEGER NOT NULL,
-			accuracy   REAL NOT NULL,
-			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-		)
-	`)
-	return err
+func migrate(db *sql.DB, migrations fs.FS) error {
+	goose.SetBaseFS(migrations)
+	if err := goose.SetDialect("postgres"); err != nil {
+		return err
+	}
+	return goose.Up(db, "sql/migrations")
 }
